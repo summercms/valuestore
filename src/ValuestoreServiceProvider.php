@@ -4,7 +4,7 @@ namespace Spatie\Valuestore;
 
 use Illuminate\Support\ServiceProvider;
 
-class SkeletonServiceProvider extends ServiceProvider
+class ValuestoreServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
