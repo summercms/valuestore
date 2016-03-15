@@ -2,25 +2,92 @@
 
 namespace Spatie\Valuestore;
 
+use Illuminate\Contracts\Filesystem;
+
 class ValuestoreClass
 {
     /**
-     * Create a new Valuestore Instance
+     * @var \Illuminate\Filesystem\Filesystem
      */
-    public function __construct()
+    protected $filesystem;
+
+    /**
+     * @var string
+     */
+    protected $fileName;
+
+    public function __construct(Filesystem $filesystem)
     {
-        // constructor body
+        $this->filesystem = $filesystem;
     }
 
     /**
-     * Friendly welcome
-     *
-     * @param string $phrase Phrase to return
-     *
-     * @return string Returns the phrase passed in
+     * @param string $fileName
+     * @return $this
      */
-    public function echoPhrase($phrase)
+    public function setFileName($fileName)
     {
-        return $phrase;
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * @param string$fileName
+     * @return $this
+     */
+    public static function create($fileName)
+    {
+        return app(static::class)->setFileName($fileName);
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     */
+    public function put($name, $value)
+    {
+        $currentContent = $this->currentContent();
+
+        $currentContent[$name] = $value;
+
+        $this->setContent($currentContent);
+    }
+
+    /**
+     * @param string $name
+     * @return null|string
+     */
+    public function get($name)
+    {
+        if (! array_key_exists($name, $this->currentContent())) {
+            return null;
+        }
+
+        return $this->currentContent()[$name];
+    }
+
+    public function clear()
+    {
+        $this->setContent([]);
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function currentContent()
+    {
+        if (! file_exists($this->fileName)) {
+            return [];
+        }
+
+        return json_decode(file_get_contents($this->fileName), true);
+    }
+
+    protected function setContent(array $values)
+    {
+        $this->filesystem->put($this->fileName, json_encode($values));
     }
 }
