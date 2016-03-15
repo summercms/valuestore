@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton;
+namespace Spatie\Valuestore;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -12,8 +12,10 @@ class SkeletonServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/skeleton.php' => config_path('skeleton.php'),
+            __DIR__.'/../config/valuestore.php' => config_path('valuestore.php'),
         ], 'config');
+
+        $this->app->make(ValuestoreClass::class);
 
         /*
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'skeleton');
@@ -29,6 +31,8 @@ class SkeletonServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'skeleton');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'valuestore');
+
+        $this->app->singleton(ValuestoreClass::class);
     }
 }

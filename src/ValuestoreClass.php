@@ -1,11 +1,11 @@
 <?php
 
-namespace Spatie\Skeleton;
+namespace Spatie\Valuestore;
 
-class SkeletonClass
+class ValuestoreClass
 {
     /**
-     * Create a new Skeleton Instance
+     * Create a new Valuestore Instance
      */
     public function __construct()
     {
