@@ -1,16 +1,18 @@
 {
-    "name": "spatie/:package_name",
-    "description": ":package_description",
+    "name": "spatie/laravel-valuestore",
+    "description": "Easily store some values",
     "keywords": [
         "spatie",
-        ":package_name"
+        "laravel-valuestore",
+        "laravel",
+        "json"
     ],
-    "homepage": "https://github.com/spatie/:package_name",
+    "homepage": "https://github.com/spatie/laravel-valuestore",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "Jolita Grazyte",
+            "email": "jolita@spatie.be",
             "homepage": "https://spatie.be",
             "role": "Developer"
         }
@@ -23,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Spatie\\Valuestore\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Test\\": "tests"
+            "Spatie\\Valuestore\\Test\\": "tests"
         }
     },
     "scripts": {
