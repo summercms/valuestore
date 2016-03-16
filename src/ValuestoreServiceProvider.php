@@ -31,7 +31,7 @@ class ValuestoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'valuestore');
+        $this->mergeConfigFrom(__DIR__.'/../config/valuestore.php', 'valuestore');
 
         $this->app->singleton(ValuestoreClass::class);
     }
