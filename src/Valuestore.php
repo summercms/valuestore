@@ -2,9 +2,9 @@
 
 namespace Spatie\Valuestore;
 
-use Illuminate\Contracts\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 
-class ValuestoreClass
+class Valuestore
 {
     /**
      * @var \Illuminate\Filesystem\Filesystem
@@ -25,7 +25,7 @@ class ValuestoreClass
      * @param string $fileName
      * @return $this
      */
-    public function setFileName($fileName)
+    public function setFileName(string $fileName)
     {
         $this->fileName = $fileName;
 
@@ -33,10 +33,10 @@ class ValuestoreClass
     }
 
     /**
-     * @param string$fileName
+     * @param string $fileName
      * @return $this
      */
-    public static function create($fileName)
+    public static function make(string $fileName)
     {
         return app(static::class)->setFileName($fileName);
     }
@@ -45,7 +45,7 @@ class ValuestoreClass
      * @param string $name
      * @param string $value
      */
-    public function put($name, $value)
+    public function put(string $name, string $value)
     {
         $currentContent = $this->currentContent();
 
@@ -58,7 +58,7 @@ class ValuestoreClass
      * @param string $name
      * @return null|string
      */
-    public function get($name)
+    public function get(string $name)
     {
         if (! array_key_exists($name, $this->currentContent())) {
             return null;
@@ -77,7 +77,7 @@ class ValuestoreClass
     /**
      * @return array
      */
-    public function currentContent()
+    public function currentContent() : array
     {
         if (! file_exists($this->fileName)) {
             return [];

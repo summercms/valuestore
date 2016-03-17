@@ -15,7 +15,6 @@ class ValuestoreServiceProvider extends ServiceProvider
             __DIR__.'/../config/valuestore.php' => config_path('valuestore.php'),
         ], 'config');
 
-        $this->app->make(ValuestoreClass::class);
 
         /*
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'skeleton');
@@ -33,6 +32,9 @@ class ValuestoreServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/valuestore.php', 'valuestore');
 
-        $this->app->singleton(ValuestoreClass::class);
+        $this->app->bind(
+            'valuestore',
+            'Spatie\Valuestore\Valuestore'
+        );
     }
 }
