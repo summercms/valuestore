@@ -2,27 +2,16 @@
 
 namespace Spatie\Valuestore;
 
-use Illuminate\Filesystem\Filesystem;
-
 class Valuestore
 {
-    /**
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $filesystem;
-
     /**
      * @var string
      */
     protected $fileName;
 
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->filesystem = $filesystem;
-    }
-
     /**
      * @param string $fileName
+     *
      * @return $this
      */
     public function setFileName(string $fileName)
@@ -34,11 +23,12 @@ class Valuestore
 
     /**
      * @param string $fileName
+     *
      * @return $this
      */
-    public static function make(string $fileName)
+    public function make(string $fileName)
     {
-        return app(static::class)->setFileName($fileName);
+        return $this->setFileName($fileName);
     }
 
     /**
@@ -56,12 +46,13 @@ class Valuestore
 
     /**
      * @param string $name
+     *
      * @return null|string
      */
     public function get(string $name)
     {
-        if (! array_key_exists($name, $this->currentContent())) {
-            return null;
+        if (!array_key_exists($name, $this->currentContent())) {
+            return;
         }
 
         return $this->currentContent()[$name];
@@ -79,7 +70,7 @@ class Valuestore
      */
     public function currentContent() : array
     {
-        if (! file_exists($this->fileName)) {
+        if (!file_exists($this->fileName)) {
             return [];
         }
 
@@ -88,6 +79,6 @@ class Valuestore
 
     protected function setContent(array $values)
     {
-        $this->filesystem->put($this->fileName, json_encode($values));
+        file_put_contents($this->fileName, json_encode($values));
     }
 }
