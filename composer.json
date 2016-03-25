@@ -1,15 +1,20 @@
 {
-    "name": "spatie/laravel-valuestore",
+    "name": "spatie/valuestore",
     "description": "Easily store some values",
     "keywords": [
         "spatie",
-        "laravel-valuestore",
-        "laravel",
+        "valuestore",
         "json"
     ],
-    "homepage": "https://github.com/spatie/laravel-valuestore",
+    "homepage": "https://github.com/spatie/valuestore",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Freek Van der Herten",
+            "email": "freek@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        },
         {
             "name": "Jolita Grazyte",
             "email": "jolita@spatie.be",
