@@ -21,7 +21,7 @@ $ composer require spatie/valuestore
 
 ## Usage
 
-To get started you must initiate the class:
+To get started you must first make a new instance of the Valuestore class:
 ``` php
 $valuestore = new Spatie\Valuestore();
 ```
