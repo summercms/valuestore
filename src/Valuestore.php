@@ -14,11 +14,14 @@ class Valuestore
      *
      * @return $this
      */
-    public function setFileName(string $fileName)
+    public static function make(string $fileName)
     {
-        $this->fileName = $fileName;
+        return (new static)->setFileName($fileName);
+    }
 
-        return $this;
+    protected function __construct()
+    {
+
     }
 
     /**
@@ -26,18 +29,17 @@ class Valuestore
      *
      * @return $this
      */
-    public function make(string $fileName)
+    protected function setFileName(string $fileName)
     {
-        return $this->setFileName($fileName);
+        $this->fileName = $fileName;
+
+        return $this;
     }
 
-    /**
-     * @param string $name
-     * @param string $value
-     */
+
     public function put(string $name, string $value)
     {
-        $currentContent = $this->currentContent();
+        $currentContent = $this->all();
 
         $currentContent[$name] = $value;
 
@@ -51,11 +53,11 @@ class Valuestore
      */
     public function get(string $name)
     {
-        if (!array_key_exists($name, $this->currentContent())) {
+        if (!array_key_exists($name, $this->all())) {
             return;
         }
 
-        return $this->currentContent()[$name];
+        return $this->all()[$name];
     }
 
     public function clear()
@@ -68,7 +70,7 @@ class Valuestore
     /**
      * @return array
      */
-    public function currentContent() : array
+    public function all() : array
     {
         if (!file_exists($this->fileName)) {
             return [];

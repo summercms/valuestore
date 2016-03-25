@@ -6,62 +6,115 @@ use Spatie\Valuestore\Valuestore;
 
 class ValuestoreTest extends \PHPUnit_Framework_TestCase
 {
-    protected $file;
+    /**
+     * @var Valuestore
+     */
     protected $valuestore;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->file = $this->getTempDirectory().'test';
-        $this->valuestore = new Valuestore();
-        $this->valuestore->make($this->file);
+        $storageFile = __DIR__."/temp/storage.json";
+
+        if (file_exists($storageFile)) {
+            unlink($storageFile);
+        }
+
+        $this->valuestore = Valuestore::make($storageFile);
+
     }
 
     /** @test */
-    public function it_can_store_some_data_in_json_format_in_the_file()
+    public function it_can_store_a_key_value_pair()
     {
-        $this->valuestore->put('test', 'TEST');
-        $content = file_get_contents($this->file);
+        $this->valuestore->put('key', 'value');
 
-        $this->assertJson($content);
+        $this->assertSame('value', $this->valuestore->get('key'));
+    }
+
+
+    /** @test */
+    public function it_will_return_null_for_a_non_existing_value()
+    {
+        $this->assertNull($this->valuestore->get('non existing key'));
     }
 
     /** @test */
-    public function it_can_add_lines_of_data_to_the_existing_file_without_overwriting_the_data_in_the_file()
+    public function it_can_overwrite_a_value()
     {
-        $content = file_get_contents($this->file);
-        $this->valuestore->put('additional data', 'adding more data');
-        $newContent = file_get_contents($this->file);
+        $this->valuestore->put('key', 'value');
 
-        $this->assertNotEquals($newContent, $content);
+        $this->valuestore->put('key', 'otherValue');
+
+        $this->assertSame('otherValue', $this->valuestore->get('key'));
     }
 
     /** @test */
-    public function it_can_get_data()
+    public function it_can_fetch_all_values_at_once()
     {
-        $content = $this->valuestore->get('test');
+        $this->valuestore->put('key', 'value');
 
-        $this->assertNotEmpty($content);
+        $this->valuestore->put('otherKey', 'otherValue');
 
-        $this->assertEquals('TEST', $content);
+        $this->assertSame([
+            'key' => 'value',
+            'otherKey' => 'otherValue'
+        ], $this->valuestore->all());
     }
 
     /** @test */
-    public function it_can_clear_data()
+    public function it_can_store_multiple_value_pairs_in_one_go()
     {
-        $content = file_get_contents($this->file);
+        $values = [
+            'key' => 'value',
+            'otherKey' => 'otherValue',
+        ];
+
+        $this->valuestore->put($values);
+
+        $this->assertSame('value', $this->valuestore->get('key'));
+
+        $this->assertSame($values, $this->valuestore->all());
+    }
+
+    /** @test */
+    public function it_can_clear_all_values()
+    {
+        $this->valuestore->put('key', 'value');
+
+        $this->valuestore->put('otherKey', 'otherValue');
+
         $this->valuestore->clear();
-        $newContent = file_get_contents($this->file);
 
-        $this->assertNotContains($content, $newContent);
+        $this->assertNull($this->valuestore->get('key'));
+
+        $this->assertNull($this->valuestore->get('otherKey'));
     }
 
-    /**
-     * @return string
-     */
-    protected function getTempDirectory() : string
+    /** @test */
+    public function it_can_fetch_all_values_starting_with_a_certain_value()
     {
-        return __DIR__.'/temp/';
+        $this->valuestore->put([
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2',
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ]);
+
+        $expectedArray = [
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2'
+        ];
+
+        $this->assertSame($expectedArray, $this->valuestore->all('group1'));
     }
+
+    /** @test */
+    public function it_will_return_an_empty_array_when_getting_all_content()
+    {
+        $this->assertSame([], $this->valuestore->all());
+    }
+
+
 }
