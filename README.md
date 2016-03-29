@@ -75,7 +75,7 @@ Or:
 ```  php
 $file = Valuestore::make('file-name');
 $file->clear();
-``
+```
 
 
 ## Changelog
