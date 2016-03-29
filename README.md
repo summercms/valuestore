@@ -69,7 +69,7 @@ $file->all('string-key-contains');
 If you want to clear all the values in the file:
 ```  php
 Valuestore::make('file-name')->clear();
-``
+```
 
 Or:
 ```  php
