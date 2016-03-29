@@ -2,6 +2,7 @@
 
 namespace Spatie\Valuestore;
 
+
 class Valuestore
 {
     /**
@@ -37,11 +38,20 @@ class Valuestore
     }
 
 
-    public function put(string $name, string $value)
+    public function put($name, string $value = null)
     {
         $currentContent = $this->all();
 
-        $currentContent[$name] = $value;
+        if(!is_array($name) && !is_null($value)){
+            $currentContent[$name] = $value;
+        }
+
+        else{
+            foreach($name as $key => $val){
+
+                $currentContent[$key] = $val;
+            }
+        }
 
         $this->setContent($currentContent);
     }
@@ -60,23 +70,53 @@ class Valuestore
         return $this->all()[$name];
     }
 
+    /**
+     * @return $this
+     */
     public function clear()
     {
         $this->setContent([]);
 
         return $this;
+
     }
 
     /**
+     * @param string $name
+     *
      * @return array
      */
-    public function all() : array
+    public function all(string $name = null) : array
     {
         if (!file_exists($this->fileName)) {
             return [];
         }
 
-        return json_decode(file_get_contents($this->fileName), true);
+        $values  = json_decode(file_get_contents($this->fileName), true);
+
+        if(!is_null($name)){
+
+           return $this->filteredValues($values, $name);
+
+        }
+
+        return $values;
+    }
+
+    protected function filteredValues($values, $name)
+    {
+        $filteredValues = [];
+
+        foreach($values as $key => $value){
+
+            if(strpos($key, $name) !== false){
+
+                $filteredValues[$key] = $value;
+            }
+        }
+
+        return $filteredValues;
+
     }
 
     protected function setContent(array $values)

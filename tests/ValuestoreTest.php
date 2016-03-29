@@ -92,6 +92,7 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->valuestore->get('otherKey'));
     }
 
+
     /** @test */
     public function it_can_fetch_all_values_starting_with_a_certain_value()
     {

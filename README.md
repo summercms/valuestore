@@ -21,26 +21,61 @@ $ composer require spatie/valuestore
 
 ## Usage
 
-To get started you must first make a new instance of the Valuestore class:
+
+ To store some values in the file:
 ``` php
-$valuestore = new Spatie\Valuestore();
+Valuestore::make('file-name')->put('value-name', 'value');
 ```
 
-Next up you must create a file or use an existing json file.
-To create a new file or retrieve an existing file:
+Or:
 ``` php
-$file = $valuestore->make('file-name');
-```
-
-To store some values in the file:
-``` php
+$file = Valuestore::make('file-name');
 $file->put('value-name', 'value');
 ```
 
 To get a specific value from the file:
 ``` php
+Valuestore::make('file-name')->get('value-name');
+```
+
+Or:
+``` php
+$file = Valuestore::make('file-name');
 $file->get('value-name');
 ```
+
+If you want to see what's stored in the file you ask all the values at once. You'll get an array back:
+``` php
+Valuestore::make('file-name')->all();
+```
+
+Or:
+``` php
+$file = Valuestore::make('file-name');
+$file->all();
+```
+
+If you want to see all the values where the key contains a specific string:
+``` php
+Valuestore::make('file-name')->all('string-key-contains');
+```
+
+Or:
+``` php
+$file = Valuestore::make('file-name');
+$file->all('string-key-contains');
+```
+
+If you want to clear all the values in the file:
+```  php
+Valuestore::make('file-name')->clear();
+``
+
+Or:
+```  php
+$file = Valuestore::make('file-name');
+$file->clear();
+``
 
 
 ## Changelog
