@@ -57,7 +57,7 @@ $file->all();
 
 If you want to see all the values where the key contains a specific string:
 ``` php
-Valuestore::make('file-name')->all('string-key-contains');
+Valuestore::make('file-name')->all('string-that-key-must-contain');
 ```
 
 Or:
