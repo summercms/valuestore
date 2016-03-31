@@ -35,17 +35,19 @@ class Valuestore
         return $this;
     }
 
+    /**
+     * @param string|array $name
+     * @param string|null $value
+     */
     public function put($name, string $value = null)
     {
-        $currentContent = $this->all();
+        $newValues = $name;
 
-        if (!is_array($name) && !is_null($value)) {
-            $currentContent[$name] = $value;
-        } else {
-            foreach ($name as $key => $val) {
-                $currentContent[$key] = $val;
-            }
+        if (! is_array($name)) {
+            $newValues = [$name => $value];
         }
+
+        $currentContent = array_merge($this->all(), $newValues);
 
         $this->setContent($currentContent);
     }

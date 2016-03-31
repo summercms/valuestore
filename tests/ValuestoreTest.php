@@ -77,6 +77,29 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_store_values_without_forgetting_the_old_values()
+    {
+        $this->valuestore->put('test1', 'value1');
+
+        $this->valuestore->put('test2', 'value2');
+
+        $this->assertSame([
+            'test1' => 'value1',
+            'test2' => 'value2',
+        ], $this->valuestore->all());
+
+        $this->valuestore->put(['test3' => 'value3']);
+
+        $this->assertSame([
+            'test1' => 'value1',
+            'test2' => 'value2',
+            'test3' => 'value3',
+        ], $this->valuestore->all());
+
+
+    }
+
+    /** @test */
     public function it_can_clear_all_values()
     {
         $this->valuestore->put('key', 'value');
@@ -96,6 +119,7 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
         $this->valuestore->put([
             'group1Key1' => 'valueGroup1Key1',
             'group1Key2' => 'valueGroup1Key2',
+            'testgroup1' => 'valueTestGroup1',
             'group2Key1' => 'valueGroup2Key1',
             'group2Key2' => 'valueGroup2Key2',
         ]);
