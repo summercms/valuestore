@@ -2,7 +2,6 @@
 
 namespace Spatie\Valuestore;
 
-
 class Valuestore
 {
     /**
@@ -17,12 +16,11 @@ class Valuestore
      */
     public static function make(string $fileName)
     {
-        return (new static)->setFileName($fileName);
+        return (new static())->setFileName($fileName);
     }
 
     protected function __construct()
     {
-
     }
 
     /**
@@ -37,18 +35,14 @@ class Valuestore
         return $this;
     }
 
-
     public function put($name, string $value = null)
     {
         $currentContent = $this->all();
 
-        if(!is_array($name) && !is_null($value)){
+        if (!is_array($name) && !is_null($value)) {
             $currentContent[$name] = $value;
-        }
-
-        else{
-            foreach($name as $key => $val){
-
+        } else {
+            foreach ($name as $key => $val) {
                 $currentContent[$key] = $val;
             }
         }
@@ -78,7 +72,6 @@ class Valuestore
         $this->setContent([]);
 
         return $this;
-
     }
 
     /**
@@ -92,12 +85,10 @@ class Valuestore
             return [];
         }
 
-        $values  = json_decode(file_get_contents($this->fileName), true);
+        $values = json_decode(file_get_contents($this->fileName), true);
 
-        if(!is_null($name)){
-
-           return $this->filteredValues($values, $name);
-
+        if (!is_null($name)) {
+            return $this->filteredValues($values, $name);
         }
 
         return $values;
@@ -107,16 +98,13 @@ class Valuestore
     {
         $filteredValues = [];
 
-        foreach($values as $key => $value){
-
-            if(strpos($key, $name) !== false){
-
+        foreach ($values as $key => $value) {
+            if (strpos($key, $name) !== false) {
                 $filteredValues[$key] = $value;
             }
         }
 
         return $filteredValues;
-
     }
 
     protected function setContent(array $values)

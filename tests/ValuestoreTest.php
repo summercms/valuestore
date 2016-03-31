@@ -15,14 +15,13 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $storageFile = __DIR__."/temp/storage.json";
+        $storageFile = __DIR__.'/temp/storage.json';
 
         if (file_exists($storageFile)) {
             unlink($storageFile);
         }
 
         $this->valuestore = Valuestore::make($storageFile);
-
     }
 
     /** @test */
@@ -32,7 +31,6 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('value', $this->valuestore->get('key'));
     }
-
 
     /** @test */
     public function it_will_return_null_for_a_non_existing_value()
@@ -59,7 +57,7 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame([
             'key' => 'value',
-            'otherKey' => 'otherValue'
+            'otherKey' => 'otherValue',
         ], $this->valuestore->all());
     }
 
@@ -92,7 +90,6 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->valuestore->get('otherKey'));
     }
 
-
     /** @test */
     public function it_can_fetch_all_values_starting_with_a_certain_value()
     {
@@ -105,7 +102,7 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
 
         $expectedArray = [
             'group1Key1' => 'valueGroup1Key1',
-            'group1Key2' => 'valueGroup1Key2'
+            'group1Key2' => 'valueGroup1Key2',
         ];
 
         $this->assertSame($expectedArray, $this->valuestore->all('group1'));
@@ -116,6 +113,4 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame([], $this->valuestore->all());
     }
-
-
 }
