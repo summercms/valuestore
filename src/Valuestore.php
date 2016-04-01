@@ -47,9 +47,9 @@ class Valuestore
             $newValues = [$name => $value];
         }
 
-        $currentContent = array_merge($this->all(), $newValues);
+        $newContent = array_merge($this->all(), $newValues);
 
-        $this->setContent($currentContent);
+        $this->setContent($newContent);
     }
 
     /**
