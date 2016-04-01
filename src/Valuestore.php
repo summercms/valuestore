@@ -37,13 +37,13 @@ class Valuestore
 
     /**
      * @param string|array $name
-     * @param string|null $value
+     * @param string|null  $value
      */
     public function put($name, string $value = null)
     {
         $newValues = $name;
 
-        if (! is_array($name)) {
+        if (!is_array($name)) {
             $newValues = [$name => $value];
         }
 
@@ -75,7 +75,7 @@ class Valuestore
     {
         $newContent = [];
 
-        if(!is_null($name)){
+        if (!is_null($name)) {
             $newContent = $this->filteredValues($this->all(), $name, false);
         }
 
@@ -97,7 +97,6 @@ class Valuestore
 
         $values = json_decode(file_get_contents($this->fileName), true);
 
-
         if (!is_null($name)) {
             return $this->filteredValues($this->all(), $name, true);
         }
@@ -107,9 +106,10 @@ class Valuestore
 
     protected function filteredValues($values, $name, $returnEquals)
     {
-        return array_filter($values, function($key) use ($name, $returnEquals){
+        return array_filter($values, function ($key) use ($name, $returnEquals) {
 
             $isEqual = (substr($key, 0, strlen($name)) === $name);
+
             return $returnEquals ? $isEqual : !$isEqual;
 
         }, ARRAY_FILTER_USE_KEY);
@@ -119,5 +119,4 @@ class Valuestore
     {
         file_put_contents($this->fileName, json_encode($values));
     }
-
 }

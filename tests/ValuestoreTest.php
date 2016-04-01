@@ -95,8 +95,6 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
             'test2' => 'value2',
             'test3' => 'value3',
         ], $this->valuestore->all());
-
-
     }
 
     /** @test */
@@ -151,8 +149,6 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertSame($expectedArray, $this->valuestore->all());
-
-
     }
 
     /** @test */
