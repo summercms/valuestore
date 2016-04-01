@@ -133,6 +133,29 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_remove_all_values_starting_with_a_certain_value()
+    {
+        $this->valuestore->put([
+            'group1' => 'valueGroup1',
+            'group1Key1' => 'valueGroup1Key1',
+            'group1Key2' => 'valueGroup1Key2',
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ]);
+
+        $this->valuestore->clear('group1');
+
+        $expectedArray = [
+            'group2Key1' => 'valueGroup2Key1',
+            'group2Key2' => 'valueGroup2Key2',
+        ];
+
+        $this->assertSame($expectedArray, $this->valuestore->all());
+
+
+    }
+
+    /** @test */
     public function it_will_return_an_empty_array_when_getting_all_content()
     {
         $this->assertSame([], $this->valuestore->all());

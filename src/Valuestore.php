@@ -67,11 +67,19 @@ class Valuestore
     }
 
     /**
+     * @param string $name
+     *
      * @return $this
      */
-    public function clear()
+    public function clear(string $name = null)
     {
-        $this->setContent([]);
+        $newContent = [];
+
+        if(!is_null($name)){
+            $newContent = $this->filteredValues($this->all(), $name, false);
+        }
+
+        return $this->setContent($newContent);
 
         return $this;
     }
@@ -89,28 +97,27 @@ class Valuestore
 
         $values = json_decode(file_get_contents($this->fileName), true);
 
+
         if (!is_null($name)) {
-            return $this->filteredValues($values, $name);
+            return $this->filteredValues($this->all(), $name, true);
         }
 
         return $values;
     }
 
-    protected function filteredValues($values, $name)
+    protected function filteredValues($values, $name, $returnEquals)
     {
-        $filteredValues = [];
+        return array_filter($values, function($key) use ($name, $returnEquals){
 
-        foreach ($values as $key => $value) {
-            if (strpos($key, $name) !== false) {
-                $filteredValues[$key] = $value;
-            }
-        }
+            $isEqual = (substr($key, 0, strlen($name)) === $name);
+            return $returnEquals ? $isEqual : !$isEqual;
 
-        return $filteredValues;
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     protected function setContent(array $values)
     {
         file_put_contents($this->fileName, json_encode($values));
     }
+
 }
