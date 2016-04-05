@@ -22,21 +22,21 @@ $valuestore->put('anotherKey', 'anotherValue');
 
 $valuestore->all(); // returns ['key' => 'value', 'anotherKey' => 'anotherValue']
 
-$valuestore->forget('key') // the item has been removed
+$valuestore->forget('key'); // the item has been removed
 
-$valuestore->flush() // empty the entire valuestore
+$valuestore->flush(); // empty the entire valuestore
 ```
 
 Read the [usage](#usage) section of this readme to learn the other methods.
 
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
-## Install
+## Installation
 
 You can install the package via composer:
 
 ``` bash
-$ composer require spatie/valuestore
+composer require spatie/valuestore
 ```
 
 ## Usage
