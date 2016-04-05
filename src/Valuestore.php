@@ -40,7 +40,7 @@ class Valuestore
      *
      * @param string|array $name
      * @param string|int|null $value
-     * 
+     *
      * @return $this
      */
     public function put($name, $value = null)
@@ -130,8 +130,6 @@ class Valuestore
         }
 
         return $this->setContent($newContent);
-
-        return $this;
     }
 
     /**
@@ -207,8 +205,15 @@ class Valuestore
         return substr($haystack, 0, strlen($needle)) === $needle;
     }
 
+    /**
+     * @param array $values
+     *
+     * @return $this
+     */
     protected function setContent(array $values)
     {
         file_put_contents($this->fileName, json_encode($values));
+
+        return $this;
     }
 }
