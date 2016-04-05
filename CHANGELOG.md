@@ -2,19 +2,6 @@
 
 All Notable changes to `valuestore` will be documented in this file
 
-## NEXT - YYYY-MM-DD
+## 1.0.0 - 2016-04-2016
 
-### Added
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
+- initial release
