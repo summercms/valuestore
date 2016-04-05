@@ -38,7 +38,7 @@ class Valuestore
     /**
      * Put a value in the store.
      *
-     * @param string|array $name
+     * @param string|array    $name
      * @param string|int|null $value
      *
      * @return $this
@@ -152,7 +152,7 @@ class Valuestore
      * Increment a value from the store.
      *
      * @param string $name
-     * @param int $by
+     * @param int    $by
      *
      * @return int|null|string
      */
@@ -171,7 +171,7 @@ class Valuestore
      * Decrement a value from the store.
      *
      * @param string $name
-     * @param int $by
+     * @param int    $by
      *
      * @return int|null|string
      */
@@ -179,8 +179,6 @@ class Valuestore
     {
         return $this->increment($name, $by * -1);
     }
-
-
 
     protected function filterKeysStartingWith(array $values, string $startsWith) : array
     {
