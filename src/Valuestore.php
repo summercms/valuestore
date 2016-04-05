@@ -4,9 +4,7 @@ namespace Spatie\Valuestore;
 
 class Valuestore
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $fileName;
 
     /**
@@ -36,10 +34,10 @@ class Valuestore
     }
 
     /**
-     * @param string|array $name
-     * @param string|null  $value
+     * @param string|array    $name
+     * @param string|int|null $value
      */
-    public function put($name, string $value = null)
+    public function put($name, $value = null)
     {
         $newValues = $name;
 
@@ -67,29 +65,11 @@ class Valuestore
     }
 
     /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function clear(string $name = null)
-    {
-        $newContent = [];
-
-        if (!is_null($name)) {
-            $newContent = $this->filteredValues($this->all(), $name, false);
-        }
-
-        return $this->setContent($newContent);
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
+     * @param string $startingWith
      *
      * @return array
      */
-    public function all(string $name = null) : array
+    public function all(string $startingWith = '') : array
     {
         if (!file_exists($this->fileName)) {
             return [];
@@ -97,22 +77,100 @@ class Valuestore
 
         $values = json_decode(file_get_contents($this->fileName), true);
 
-        if (!is_null($name)) {
-            return $this->filteredValues($this->all(), $name, true);
+        if ($startingWith !== '') {
+            return $this->filterKeysStartingWith($this->all(), $startingWith);
         }
 
         return $values;
     }
 
-    protected function filteredValues($values, $name, $returnEquals)
+    public function increment(string $name, int $by = 1)
     {
-        return array_filter($values, function ($key) use ($name, $returnEquals) {
+        $currentValue = $this->get($name) ?? 0;
 
-            $isEqual = (substr($key, 0, strlen($name)) === $name);
+        $newValue = $currentValue + $by;
 
-            return $returnEquals ? $isEqual : !$isEqual;
+        $this->put($name, $newValue);
+
+        return $newValue;
+    }
+
+    public function decrement(string $name, int $by = 1)
+    {
+        return $this->increment($name, $by * -1);
+    }
+
+    /**
+     * Get and forget a value.
+     *
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function pull(string $name)
+    {
+        $value = $this->get($name);
+
+        $this->forget($name);
+
+        return $value;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return $this
+     */
+    public function forget(string $key)
+    {
+        $newContent = $this->all();
+
+        unset($newContent[$key]);
+
+        $this->setContent($newContent);
+
+        return $this;
+    }
+
+    /**
+     * @param string $startingWith
+     *
+     * @return $this
+     */
+    public function flush(string $startingWith = '')
+    {
+        $newContent = [];
+
+        if ($startingWith !== '') {
+            $newContent = $this->filterKeysNotStartingWith($this->all(), $startingWith);
+        }
+
+        return $this->setContent($newContent);
+
+        return $this;
+    }
+
+    protected function filterKeysStartingWith(array $values, string $startsWith) : array
+    {
+        return array_filter($values, function ($key) use ($startsWith) {
+
+            return $this->startsWith($key, $startsWith);
 
         }, ARRAY_FILTER_USE_KEY);
+    }
+
+    protected function filterKeysNotStartingWith(array $values, string $startsWith) : array
+    {
+        return array_filter($values, function ($key) use ($startsWith) {
+
+            return !$this->startsWith($key, $startsWith);
+
+        }, ARRAY_FILTER_USE_KEY);
+    }
+
+    protected function startsWith(string $haystack, string $needle) : bool
+    {
+        return substr($haystack, 0, strlen($needle)) === $needle;
     }
 
     protected function setContent(array $values)

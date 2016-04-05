@@ -6,9 +6,7 @@ use Spatie\Valuestore\Valuestore;
 
 class ValuestoreTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Valuestore
-     */
+    /** @var \Spatie\Valuestore\Valuestore */
     protected $valuestore;
 
     public function setUp()
@@ -98,20 +96,6 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_can_clear_all_values()
-    {
-        $this->valuestore->put('key', 'value');
-
-        $this->valuestore->put('otherKey', 'otherValue');
-
-        $this->valuestore->clear();
-
-        $this->assertNull($this->valuestore->get('key'));
-
-        $this->assertNull($this->valuestore->get('otherKey'));
-    }
-
-    /** @test */
     public function it_can_fetch_all_values_starting_with_a_certain_value()
     {
         $this->valuestore->put([
@@ -131,7 +115,39 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_can_remove_all_values_starting_with_a_certain_value()
+    public function it_can_forget_a_value()
+    {
+        $this->valuestore->put('key', 'value');
+
+        $this->valuestore->put('otherKey', 'otherValue');
+
+        $this->valuestore->put('otherKey2', 'otherValue2');
+
+        $this->valuestore->forget('otherKey');
+
+        $this->assertSame('value', $this->valuestore->get('key'));
+
+        $this->assertNull($this->valuestore->get('otherKey'));
+
+        $this->assertSame('otherValue2', $this->valuestore->get('otherKey2'));
+    }
+
+    /** @test */
+    public function it_can_flush_the_entire_value_store()
+    {
+        $this->valuestore->put('key', 'value');
+
+        $this->valuestore->put('otherKey', 'otherValue');
+
+        $this->valuestore->flush();
+
+        $this->assertNull($this->valuestore->get('key'));
+
+        $this->assertNull($this->valuestore->get('otherKey'));
+    }
+
+    /** @test */
+    public function it_can_flush_all_keys_starting_with_a_certain_string()
     {
         $this->valuestore->put([
             'group1' => 'valueGroup1',
@@ -141,7 +157,7 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
             'group2Key2' => 'valueGroup2Key2',
         ]);
 
-        $this->valuestore->clear('group1');
+        $this->valuestore->flush('group1');
 
         $expectedArray = [
             'group2Key1' => 'valueGroup2Key1',
@@ -155,5 +171,91 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     public function it_will_return_an_empty_array_when_getting_all_content()
     {
         $this->assertSame([], $this->valuestore->all());
+    }
+
+    /** @test */
+    public function it_can_get_and_forget_a_value()
+    {
+        $this->valuestore->put('key', 'value');
+
+        $this->assertSame('value', $this->valuestore->pull('key'));
+
+        $this->assertNull($this->valuestore->get('key'));
+    }
+
+    /** @test */
+    public function it_can_increment_a_new_value()
+    {
+        $returnValue = $this->valuestore->increment('number');
+
+        $this->assertSame(1, $returnValue);
+
+        $this->assertSame(1, $this->valuestore->get('number'));
+    }
+
+    /** @test */
+    public function it_can_increment_an_existing_value()
+    {
+        $this->valuestore->put('number', 1);
+
+        $returnValue = $this->valuestore->increment('number');
+
+        $this->assertSame(2, $returnValue);
+
+        $this->assertSame(2, $this->valuestore->get('number'));
+    }
+
+    /** @test */
+    public function it_can_increment_a_value_by_another_value()
+    {
+        $returnValue = $this->valuestore->increment('number', 2);
+
+        $this->assertSame(2, $returnValue);
+
+        $this->assertSame(2, $this->valuestore->get('number'));
+
+        $returnValue = $this->valuestore->increment('number', 2);
+
+        $this->assertSame(4, $returnValue);
+
+        $this->assertSame(4, $this->valuestore->get('number'));
+    }
+
+    /** @test */
+    public function it_can_decrement_a_new_value()
+    {
+        $returnValue = $this->valuestore->decrement('number');
+
+        $this->assertSame(-1, $returnValue);
+
+        $this->assertSame(-1, $this->valuestore->get('number'));
+    }
+
+    /** @test */
+    public function it_can_decrement_an_existing_value()
+    {
+        $this->valuestore->put('number', 10);
+
+        $returnValue = $this->valuestore->decrement('number');
+
+        $this->assertSame(9, $returnValue);
+
+        $this->assertSame(9, $this->valuestore->get('number'));
+    }
+
+    /** @test */
+    public function it_can_decrement_a_value_by_another_value()
+    {
+        $returnValue = $this->valuestore->decrement('number', 2);
+
+        $this->assertSame(-2, $returnValue);
+
+        $this->assertSame(-2, $this->valuestore->get('number'));
+
+        $returnValue = $this->valuestore->decrement('number', 2);
+
+        $this->assertSame(-4, $returnValue);
+
+        $this->assertSame(-4, $this->valuestore->get('number'));
     }
 }

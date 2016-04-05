@@ -21,7 +21,6 @@ $ composer require spatie/valuestore
 
 ## Usage
 
-
  To store some values in the file:
 ``` php
 Valuestore::make('file-name')->put('value-name', 'value');
