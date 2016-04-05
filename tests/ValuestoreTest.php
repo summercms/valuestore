@@ -31,6 +31,25 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_store_an_integer()
+    {
+        $this->valuestore->put('number', 1);
+
+        $this->assertSame(1, $this->valuestore->get('number'));
+    }
+
+    /** @test */
+    public function it_provides_a_chainable_put_method()
+    {
+        $this->valuestore
+            ->put('number', 1)
+            ->put('string', 'hello');
+
+        $this->assertSame(1, $this->valuestore->get('number'));
+        $this->assertSame('hello', $this->valuestore->get('string'));
+    }
+
+    /** @test */
     public function it_will_return_null_for_a_non_existing_value()
     {
         $this->assertNull($this->valuestore->get('non existing key'));

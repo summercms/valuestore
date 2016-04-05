@@ -7,7 +7,27 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/valuestore.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/valuestore)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/valuestore.svg?style=flat-square)](https://packagist.org/packages/spatie/valuestore)
 
-This package makes it easy to store some values to a json file and afterwards to retrieve them from the file.
+This package makes it easy to store and retrieve some values. Stores values are saved as a json in a file.
+
+It can be used like this:
+
+```php
+$valuestore = Valuestore::make($pathToFile);
+
+$valuestore->put('key', 'value');
+
+$valuestore->get('key'); //returns 'value'
+
+$valuestore->put('anotherKey', 'anotherValue');
+
+$valuestore->all(); // returns ['key' => 'value', 'anotherKey' => 'anotherValue']
+
+$valuestore->forget('key') // the item has been removed
+
+$valuestore->flush() // empty the entire valuestore
+```
+
+Read the [usage](#usage) section of this readme to learn the other methods.
 
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
@@ -21,61 +41,114 @@ $ composer require spatie/valuestore
 
 ## Usage
 
- To store some values in the file:
-``` php
-Valuestore::make('file-name')->put('value-name', 'value');
+To create a Valuestore use the `make`-method.
+
+```php
+$valuestore = Valuestore::make($pathToFile);
 ```
 
-Or:
-``` php
-$file = Valuestore::make('file-name');
-$file->put('value-name', 'value');
+All values will be saved in the given file.
+
+You can call the following methods on the `Valuestore`
+
+### put
+```php
+/**
+ * Put a value in the store.
+ *
+ * @param string|array $name
+ * @param string|int|null $value
+ * 
+ * @return $this
+ */
+public function put($name, $value = null)
 ```
 
-To get a specific value from the file:
-``` php
-Valuestore::make('file-name')->get('value-name');
+### get
+
+```php
+/**
+ * Get a value from the store.
+ *
+ * @param string $name
+ *
+ * @return null|string
+ */
+public function get(string $name)
 ```
 
-Or:
-``` php
-$file = Valuestore::make('file-name');
-$file->get('value-name');
+### all
+```php
+/**
+ * Get all values from the store.
+ *
+ * @param string $startingWith
+ *
+ * @return array
+*/
+public function all(string $startingWith = '') : array
 ```
 
-If you want to see what's stored in the file you ask all the values at once. You'll get an array back:
-``` php
-Valuestore::make('file-name')->all();
+### forget
+```php
+/**
+ * Forget a value from the store.
+ *
+ * @param string $key
+ *
+ * @return $this
+ */
+public function forget(string $key)
 ```
 
-Or:
-``` php
-$file = Valuestore::make('file-name');
-$file->all();
+### flush
+```php
+/**
+ * Flush all values from the store.
+ *
+ * @param string $startingWith
+ *
+ * @return $this
+ */public function flush(string $startingWith = '')
 ```
 
-If you want to see all the values where the key contains a specific string:
-``` php
-Valuestore::make('file-name')->all('string-that-key-must-contain');
+### pull
+```php
+/**
+ * Get and forget a value from the store.
+ *
+ * @param string $name 
+ *
+ * @return null|string
+ */
+public function pull(string $name)
 ```
 
-Or:
-``` php
-$file = Valuestore::make('file-name');
-$file->all('string-key-contains');
+### increment
+```php
+/**
+ * Increment a value from the store.
+ *
+ * @param string $name
+ * @param int $by
+ *
+ * @return int|null|string
+ */
+ public function increment(string $name, int $by = 1)
 ```
 
-If you want to clear all the values in the file:
-```  php
-Valuestore::make('file-name')->clear();
+### decrement
+```php
+/**
+ * Decrement a value from the store.
+ *
+ * @param string $name
+ * @param int $by
+ *
+ * @return int|null|string
+ */
+ public function decrement(string $name, int $by = 1)
 ```
-
-Or:
-```  php
-$file = Valuestore::make('file-name');
-$file->clear();
-```
-
 
 ## Changelog
 

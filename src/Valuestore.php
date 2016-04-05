@@ -22,6 +22,8 @@ class Valuestore
     }
 
     /**
+     * Set the filename where all values will be stored.
+     *
      * @param string $fileName
      *
      * @return $this
@@ -34,8 +36,12 @@ class Valuestore
     }
 
     /**
-     * @param string|array    $name
+     * Put a value in the store.
+     *
+     * @param string|array $name
      * @param string|int|null $value
+     * 
+     * @return $this
      */
     public function put($name, $value = null)
     {
@@ -48,9 +54,13 @@ class Valuestore
         $newContent = array_merge($this->all(), $newValues);
 
         $this->setContent($newContent);
+
+        return $this;
     }
 
     /**
+     * Get a value from the store.
+     *
      * @param string $name
      *
      * @return null|string
@@ -65,6 +75,8 @@ class Valuestore
     }
 
     /**
+     * Get all values from the store.
+     *
      * @param string $startingWith
      *
      * @return array
@@ -84,39 +96,9 @@ class Valuestore
         return $values;
     }
 
-    public function increment(string $name, int $by = 1)
-    {
-        $currentValue = $this->get($name) ?? 0;
-
-        $newValue = $currentValue + $by;
-
-        $this->put($name, $newValue);
-
-        return $newValue;
-    }
-
-    public function decrement(string $name, int $by = 1)
-    {
-        return $this->increment($name, $by * -1);
-    }
-
     /**
-     * Get and forget a value.
+     * Forget a value from the store.
      *
-     * @param string $name
-     *
-     * @return null|string
-     */
-    public function pull(string $name)
-    {
-        $value = $this->get($name);
-
-        $this->forget($name);
-
-        return $value;
-    }
-
-    /**
      * @param string $key
      *
      * @return $this
@@ -133,6 +115,8 @@ class Valuestore
     }
 
     /**
+     * Flush all values from the store.
+     *
      * @param string $startingWith
      *
      * @return $this
@@ -149,6 +133,56 @@ class Valuestore
 
         return $this;
     }
+
+    /**
+     * Get and forget a value from the store.
+     *
+     * @param string $name
+     *
+     * @return null|string
+     */
+    public function pull(string $name)
+    {
+        $value = $this->get($name);
+
+        $this->forget($name);
+
+        return $value;
+    }
+
+    /**
+     * Increment a value from the store.
+     *
+     * @param string $name
+     * @param int $by
+     *
+     * @return int|null|string
+     */
+    public function increment(string $name, int $by = 1)
+    {
+        $currentValue = $this->get($name) ?? 0;
+
+        $newValue = $currentValue + $by;
+
+        $this->put($name, $newValue);
+
+        return $newValue;
+    }
+
+    /**
+     * Decrement a value from the store.
+     *
+     * @param string $name
+     * @param int $by
+     *
+     * @return int|null|string
+     */
+    public function decrement(string $name, int $by = 1)
+    {
+        return $this->increment($name, $by * -1);
+    }
+
+
 
     protected function filterKeysStartingWith(array $values, string $startsWith) : array
     {
