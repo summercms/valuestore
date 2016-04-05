@@ -20,11 +20,20 @@ $valuestore->get('key'); //returns 'value'
 
 $valuestore->put('anotherKey', 'anotherValue');
 
-$valuestore->all(); // returns ['key' => 'value', 'anotherKey' => 'anotherValue']
+//put multiple items in one go
+$valuestore->put(['ringo'=>'drums', 'paul'=>'bass']);
+
+$valuestore->all(); // returns an array with all items
 
 $valuestore->forget('key'); // the item has been removed
 
 $valuestore->flush(); // empty the entire valuestore
+
+$valuestore->flush('somekey') // remove all items who's keys start with "somekey"
+
+$valuestore->increment('number') // $valuestore->get('key') will return 1 
+$valuestore->increment('number') // $valuestore->get('key') will return 2
+$valuestore->increment('number'), 3 // $valuestore->get('key') will return 5
 ```
 
 Read the [usage](#usage) section of this readme to learn the other methods.
