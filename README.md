@@ -18,6 +18,8 @@ $valuestore->put('key', 'value');
 
 $valuestore->get('key'); // Returns 'value'
 
+$valuestore->has('key'); // Returns true
+
 // Specify a default value for when the specified key does not exist
 $valuestore->get('non existing key', 'default') // Returns 'default'
 
@@ -70,7 +72,7 @@ To create a Valuestore use the `make`-method.
 $valuestore = Valuestore::make($pathToFile);
 ```
 
-All values will be saved in the given file.
+All values will be saved as json in the given file.
 
 When there are no values stored, the file will be deleted.
 
@@ -100,6 +102,15 @@ public function put($name, $value = null)
  * @return null|string
  */
 public function get(string $name)
+```
+
+### has
+
+```php
+/*
+ * Determine if the store has a value for the given name.
+ */
+public function has(string $name) : bool
 ```
 
 ### all
