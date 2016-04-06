@@ -174,7 +174,7 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
             'group1Key2' => 'valueGroup1Key2',
         ];
 
-        $this->assertSame($expectedArray, $this->valuestore->all('group1'));
+        $this->assertSame($expectedArray, $this->valuestore->allStartingWith('group1'));
     }
 
     /** @test */
@@ -220,7 +220,7 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
             'group2Key2' => 'valueGroup2Key2',
         ]);
 
-        $this->valuestore->flush('group1');
+        $this->valuestore->flushStartingWith('group1');
 
         $expectedArray = [
             'group2Key1' => 'valueGroup2Key1',
@@ -338,5 +338,15 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(isset($this->valuestore['key']));
 
         $this->assertNull($this->valuestore['key']);
+    }
+
+    /** @test */
+    public function it_implements_countable()
+    {
+        $this->assertCount(0, $this->valuestore);
+
+        $this->valuestore->put('key', 'value');
+
+        $this->assertCount(1, $this->valuestore);
     }
 }

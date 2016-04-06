@@ -3,8 +3,9 @@
 namespace Spatie\Valuestore;
 
 use ArrayAccess;
+use Countable;
 
-class Valuestore implements ArrayAccess
+class Valuestore implements ArrayAccess, Countable
 {
     /** @var string */
     protected $fileName;
@@ -311,6 +312,24 @@ class Valuestore implements ArrayAccess
     {
         file_put_contents($this->fileName, json_encode($values));
 
+        if (! count($values)) {
+            unlink($this->fileName);
+        }
+
         return $this;
+    }
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        return count($this->all());
     }
 }
