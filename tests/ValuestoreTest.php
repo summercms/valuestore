@@ -6,6 +6,9 @@ use Spatie\Valuestore\Valuestore;
 
 class ValuestoreTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var string */
+    protected $storageFile;
+
     /** @var \Spatie\Valuestore\Valuestore */
     protected $valuestore;
 
@@ -13,13 +16,13 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $storageFile = __DIR__.'/temp/storage.json';
+        $this->storageFile = __DIR__.'/temp/storage.json';
 
-        if (file_exists($storageFile)) {
-            unlink($storageFile);
+        if (file_exists($this->storageFile)) {
+            unlink($this->storageFile);
         }
 
-        $this->valuestore = Valuestore::make($storageFile);
+        $this->valuestore = Valuestore::make($this->storageFile);
     }
 
     /** @test */
@@ -348,5 +351,25 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
         $this->valuestore->put('key', 'value');
 
         $this->assertCount(1, $this->valuestore);
+    }
+
+    /** @test */
+    public function it_will_delete_the_underlying_file_when_no_values_are_left_in_the_store()
+    {
+        $this->assertFileNotExists($this->storageFile);
+
+        $this->valuestore->put('key', 'value');
+
+        $this->assertFileExists($this->storageFile);
+
+        $this->valuestore->forget('key');
+
+        $this->assertFileNotExists($this->storageFile);
+
+        $this->valuestore->put('key', 'value');
+
+        $this->valuestore->flush();
+
+        $this->assertFileNotExists($this->storageFile);
     }
 }
