@@ -18,6 +18,9 @@ $valuestore->put('key', 'value');
 
 $valuestore->get('key'); // Returns 'value'
 
+// Specify a default value for when the specified key does not exist
+$valuestore->get('non existing key', 'default') // Returns 'default'
+
 $valuestore->put('anotherKey', 'anotherValue');
 
 // Put multiple items in one go
@@ -29,11 +32,22 @@ $valuestore->forget('key'); // Removes the item
 
 $valuestore->flush(); // Empty the entire valuestore
 
-$valuestore->flush('somekey'); // remove all items who's keys start with "somekey"
+$valuestore->flushStartingWith('somekey'); // remove all items who's keys start with "somekey"
 
 $valuestore->increment('number'); // $valuestore->get('key') will return 1 
 $valuestore->increment('number'); // $valuestore->get('key') will return 2
 $valuestore->increment('number', 3); // $valuestore->get('key') will return 5
+
+// Valuestore implements ArrayAccess
+$valuestore['key'] = 'value;
+$valuestore['key']; // Returns 'value'
+isset($valuestore['key']; // Return true
+unset($valuestore['key']; // Equivalent to removing the value
+
+//Valuestore impements Countable
+count($valuestore); // Returns 0
+$valustore->put('key', 'value');
+count ($valuestore); // Returns 1
 ```
 
 Read the [usage](#usage) section of this readme to learn the other methods.
@@ -93,6 +107,16 @@ public function get(string $name)
 /**
  * Get all values from the store.
  *
+ * @return array
+*/
+public function all() : array
+```
+
+### allStartingWith
+```php
+/**
+ * Get all values from the store which keys start with the given string.
+ *
  * @param string $startingWith
  *
  * @return array
@@ -117,10 +141,19 @@ public function forget(string $key)
 /**
  * Flush all values from the store.
  *
- * @param string $startingWith
+ * @return $this
+ */
+ public function flush()
+```
+
+### flushStaringWith
+```php
+/**
+ * Flush all values from the store which keys start with the specified value.
  *
  * @return $this
- */public function flush(string $startingWith = '')
+ */
+ public function flush(string $startingWith)
 ```
 
 ### pull
