@@ -124,23 +124,33 @@ class Valuestore implements ArrayAccess, Countable
     /**
      * Get all values from the store.
      *
-     * @param string $startingWith
-     *
      * @return array
      */
-    public function all(string $startingWith = '') : array
+    public function all() : array
     {
         if (!file_exists($this->fileName)) {
             return [];
         }
 
-        $values = json_decode(file_get_contents($this->fileName), true);
+        return json_decode(file_get_contents($this->fileName), true);
+    }
 
-        if ($startingWith !== '') {
-            return $this->filterKeysStartingWith($this->all(), $startingWith);
+    /**
+     * Get all keys starting with a given string from the store.
+     *
+     * @param string $startingWith
+     *
+     * @return array
+     */
+    public function allStartingWith(string $startingWith = '') : array
+    {
+        $values = $this->all();
+
+        if ($startingWith === '') {
+            return $values;
         }
 
-        return $values;
+        return $this->filterKeysStartingWith($values, $startingWith);
     }
 
     /**
@@ -164,11 +174,21 @@ class Valuestore implements ArrayAccess, Countable
     /**
      * Flush all values from the store.
      *
+     * @return $this
+     */
+    public function flush()
+    {
+        return $this->setContent([]);
+    }
+
+    /**
+     * Flush all values which keys start with a given string.
+     *
      * @param string $startingWith
      *
      * @return $this
      */
-    public function flush(string $startingWith = '')
+    public function flushStartingWith(string $startingWith = '')
     {
         $newContent = [];
 
@@ -312,7 +332,7 @@ class Valuestore implements ArrayAccess, Countable
     {
         file_put_contents($this->fileName, json_encode($values));
 
-        if (! count($values)) {
+        if (!count($values)) {
             unlink($this->fileName);
         }
 
@@ -320,12 +340,15 @@ class Valuestore implements ArrayAccess, Countable
     }
 
     /**
-     * Count elements of an object
+     * Count elements of an object.
+     *
      * @link http://php.net/manual/en/countable.count.php
+     *
      * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     *             </p>
+     *             <p>
+     *             The return value is cast to an integer.
+     *
      * @since 5.1.0
      */
     public function count()
