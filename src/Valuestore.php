@@ -59,19 +59,63 @@ class Valuestore
     }
 
     /**
+     * Push a new value into an array.
+     *
+     * @param string $name
+     * @param $pushValue
+     *
+     * @return $this
+     */
+    public function push(string $name, $pushValue)
+    {
+        if (!is_array($pushValue)) {
+            $pushValue = [$pushValue];
+        }
+
+        if (!$this->has($name)) {
+            $this->put($name, $pushValue);
+
+            return $this;
+        }
+
+        $oldValue = $this->get($name);
+
+        if (!is_array($oldValue)) {
+            $oldValue = [$oldValue];
+        }
+
+        if (is_array($oldValue)) {
+            $newValue = array_merge($oldValue, $pushValue);
+        }
+
+        $this->put($name, $newValue);
+
+        return $this;
+    }
+
+    /**
      * Get a value from the store.
      *
      * @param string $name
+     * @param $default
      *
      * @return null|string
      */
-    public function get(string $name)
+    public function get(string $name, $default = null)
     {
         if (!array_key_exists($name, $this->all())) {
-            return;
+            return $default;
         }
 
         return $this->all()[$name];
+    }
+
+    /*
+     * Determine if the store has a value for the given name.
+     */
+    public function has(string $name) : bool
+    {
+        return array_key_exists($name, $this->all());
     }
 
     /**

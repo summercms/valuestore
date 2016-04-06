@@ -31,6 +31,50 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_store_an_array()
+    {
+        $testArray = ['one' => 1, 'two' => 2];
+
+        $this->valuestore->put('key', $testArray);
+
+        $this->assertSame($testArray, $this->valuestore->get('key'));
+    }
+
+    /** @test */
+    public function it_can_push_a_value_to_a_non_existing_key()
+    {
+        $this->valuestore->push('key', 'value');
+
+        $this->assertSame(['value'], $this->valuestore->get('key'));
+    }
+
+    /** @test */
+    public function it_can_push_a_value_to_an_existing_key()
+    {
+        $this->valuestore->put('key', 'value');
+
+        $this->valuestore->push('key', 'value2');
+
+        $this->assertSame(['value', 'value2'], $this->valuestore->get('key'));
+    }
+
+    /** @test */
+    public function it_can_determine_if_the_store_holds_a_value_for_a_given_name()
+    {
+        $this->assertFalse($this->valuestore->has('key'));
+
+        $this->valuestore->put('key', 'value');
+
+        $this->assertTrue($this->valuestore->has('key'));
+    }
+
+    /** @test */
+    public function it_will_return_the_default_value_when_using_a_non_existing_key()
+    {
+        $this->assertSame('default', $this->valuestore->get('key', 'default'));
+    }
+
+    /** @test */
     public function it_can_store_an_integer()
     {
         $this->valuestore->put('number', 1);
