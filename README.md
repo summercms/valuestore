@@ -48,8 +48,8 @@ unset($valuestore['key']; // Equivalent to removing the value
 
 // Valuestore impements Countable
 count($valuestore); // Returns 0
-$valustore->put('key', 'value');
-count ($valuestore); // Returns 1
+$valuestore->put('key', 'value');
+count($valuestore); // Returns 1
 ```
 
 Read the [usage](#usage) section of this readme to learn the other methods.
