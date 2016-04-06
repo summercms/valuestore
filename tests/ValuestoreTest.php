@@ -321,4 +321,22 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(-4, $this->valuestore->get('number'));
     }
+
+    /** @test */
+    public function it_implements_array_access()
+    {
+        $this->assertFalse(isset($this->valuestore['key']));
+
+        $this->valuestore['key'] = 'value';
+
+        $this->assertTrue(isset($this->valuestore['key']));
+
+        $this->assertSame('value', $this->valuestore['key']);
+
+        unset($this->valuestore['key']);
+
+        $this->assertFalse(isset($this->valuestore['key']));
+
+        $this->assertNull($this->valuestore['key']);
+    }
 }
