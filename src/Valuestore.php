@@ -299,7 +299,7 @@ class Valuestore implements ArrayAccess, Countable
     {
         $this->forget($offset);
     }
-    
+
     /**
      * Count elements.
      *
