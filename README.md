@@ -43,8 +43,8 @@ $valuestore->increment('number', 3); // $valuestore->get('key') will return 5
 // Valuestore implements ArrayAccess
 $valuestore['key'] = 'value';
 $valuestore['key']; // Returns 'value'
-isset($valuestore['key']; // Return true
-unset($valuestore['key']; // Equivalent to removing the value
+isset($valuestore['key']); // Return true
+unset($valuestore['key']); // Equivalent to removing the value
 
 // Valuestore impements Countable
 count($valuestore); // Returns 0
