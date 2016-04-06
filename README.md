@@ -58,6 +58,8 @@ $valuestore = Valuestore::make($pathToFile);
 
 All values will be saved in the given file.
 
+When there are no values stored, the file will be deleted.
+
 You can call the following methods on the `Valuestore`
 
 ### put
