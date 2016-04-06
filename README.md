@@ -46,7 +46,7 @@ $valuestore['key']; // Returns 'value'
 isset($valuestore['key']; // Return true
 unset($valuestore['key']; // Equivalent to removing the value
 
-//Valuestore impements Countable
+// Valuestore impements Countable
 count($valuestore); // Returns 0
 $valustore->put('key', 'value');
 count ($valuestore); // Returns 1
