@@ -132,7 +132,7 @@ public function all() : array
  *
  * @return array
 */
-public function all(string $startingWith = '') : array
+public function allStartingWith(string $startingWith = '') : array
 ```
 
 ### forget
@@ -157,14 +157,16 @@ public function forget(string $key)
  public function flush()
 ```
 
-### flushStaringWith
+### flushStartingWith
 ```php
 /**
  * Flush all values from the store which keys start with the specified value.
  *
+ * @param string $startingWith
+ *
  * @return $this
  */
- public function flush(string $startingWith)
+ public function flushStartingWith(string $startingWith)
 ```
 
 ### pull
