@@ -16,24 +16,24 @@ $valuestore = Valuestore::make($pathToFile);
 
 $valuestore->put('key', 'value');
 
-$valuestore->get('key'); //returns 'value'
+$valuestore->get('key'); // Returns 'value'
 
 $valuestore->put('anotherKey', 'anotherValue');
 
-//put multiple items in one go
-$valuestore->put(['ringo'=>'drums', 'paul'=>'bass']);
+// Put multiple items in one go
+$valuestore->put(['ringo' => 'drums', 'paul' => 'bass']);
 
-$valuestore->all(); // returns an array with all items
+$valuestore->all(); // Returns an array with all items
 
-$valuestore->forget('key'); // the item has been removed
+$valuestore->forget('key'); // Removes the item
 
-$valuestore->flush(); // empty the entire valuestore
+$valuestore->flush(); // Empty the entire valuestore
 
-$valuestore->flush('somekey') // remove all items who's keys start with "somekey"
+$valuestore->flush('somekey'); // remove all items who's keys start with "somekey"
 
-$valuestore->increment('number') // $valuestore->get('key') will return 1 
-$valuestore->increment('number') // $valuestore->get('key') will return 2
-$valuestore->increment('number'), 3 // $valuestore->get('key') will return 5
+$valuestore->increment('number'); // $valuestore->get('key') will return 1 
+$valuestore->increment('number'); // $valuestore->get('key') will return 2
+$valuestore->increment('number', 3); // $valuestore->get('key') will return 5
 ```
 
 Read the [usage](#usage) section of this readme to learn the other methods.
