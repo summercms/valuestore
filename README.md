@@ -41,7 +41,7 @@ $valuestore->increment('number'); // $valuestore->get('key') will return 2
 $valuestore->increment('number', 3); // $valuestore->get('key') will return 5
 
 // Valuestore implements ArrayAccess
-$valuestore['key'] = 'value;
+$valuestore['key'] = 'value';
 $valuestore['key']; // Returns 'value'
 isset($valuestore['key']; // Return true
 unset($valuestore['key']; // Equivalent to removing the value
