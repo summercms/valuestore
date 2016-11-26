@@ -5,6 +5,7 @@
 [![Build Status](https://img.shields.io/travis/spatie/valuestore/master.svg?style=flat-square)](https://travis-ci.org/spatie/valuestore)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/7e610551-bf37-46f4-8b2c-6d8020328b5a.svg?style=flat-square)](https://insight.sensiolabs.com/projects/7e610551-bf37-46f4-8b2c-6d8020328b5a)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/valuestore.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/valuestore)
+[![StyleCI](https://styleci.io/repos/53952776/shield?branch=master)](https://styleci.io/repos/53952776)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/valuestore.svg?style=flat-square)](https://packagist.org/packages/spatie/valuestore)
 
 This package makes it easy to store and retrieve some values. Stores values are saved as a json in a file.
