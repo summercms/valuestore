@@ -50,7 +50,7 @@ class Valuestore implements ArrayAccess, Countable
     {
         $newValues = $name;
 
-        if (!is_array($name)) {
+        if (! is_array($name)) {
             $newValues = [$name => $value];
         }
 
@@ -71,11 +71,11 @@ class Valuestore implements ArrayAccess, Countable
      */
     public function push(string $name, $pushValue)
     {
-        if (!is_array($pushValue)) {
+        if (! is_array($pushValue)) {
             $pushValue = [$pushValue];
         }
 
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             $this->put($name, $pushValue);
 
             return $this;
@@ -83,7 +83,7 @@ class Valuestore implements ArrayAccess, Countable
 
         $oldValue = $this->get($name);
 
-        if (!is_array($oldValue)) {
+        if (! is_array($oldValue)) {
             $oldValue = [$oldValue];
         }
 
@@ -106,7 +106,7 @@ class Valuestore implements ArrayAccess, Countable
      */
     public function get(string $name, $default = null)
     {
-        if (!array_key_exists($name, $this->all())) {
+        if (! array_key_exists($name, $this->all())) {
             return $default;
         }
 
@@ -128,7 +128,7 @@ class Valuestore implements ArrayAccess, Countable
      */
     public function all() : array
     {
-        if (!file_exists($this->fileName)) {
+        if (! file_exists($this->fileName)) {
             return [];
         }
 
@@ -315,18 +315,14 @@ class Valuestore implements ArrayAccess, Countable
     protected function filterKeysStartingWith(array $values, string $startsWith) : array
     {
         return array_filter($values, function ($key) use ($startsWith) {
-
             return $this->startsWith($key, $startsWith);
-
         }, ARRAY_FILTER_USE_KEY);
     }
 
     protected function filterKeysNotStartingWith(array $values, string $startsWith) : array
     {
         return array_filter($values, function ($key) use ($startsWith) {
-
-            return !$this->startsWith($key, $startsWith);
-
+            return ! $this->startsWith($key, $startsWith);
         }, ARRAY_FILTER_USE_KEY);
     }
 
@@ -344,7 +340,7 @@ class Valuestore implements ArrayAccess, Countable
     {
         file_put_contents($this->fileName, json_encode($values));
 
-        if (!count($values)) {
+        if (! count($values)) {
             unlink($this->fileName);
         }
 
