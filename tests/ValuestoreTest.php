@@ -62,6 +62,24 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_prepend_a_value_to_a_non_existing_key()
+    {
+        $this->valuestore->prepend('key', 'value');
+
+        $this->assertSame(['value'], $this->valuestore->get('key'));
+    }
+
+    /** @test */
+    public function it_can_prepend_a_value_to_an_existing_key()
+    {
+        $this->valuestore->put('key', 'value');
+
+        $this->valuestore->prepend('key', 'value2');
+
+        $this->assertSame(['value2', 'value'], $this->valuestore->get('key'));
+    }
+
+    /** @test */
     public function it_can_determine_if_the_store_holds_a_value_for_a_given_name()
     {
         $this->assertFalse($this->valuestore->has('key'));

@@ -216,6 +216,32 @@ public function pull(string $name)
  public function decrement(string $name, int $by = 1)
 ```
 
+## push
+```php
+/**
+ * Push a new value into an array.
+ *
+ * @param string $name
+ * @param $pushValue
+ *
+ * @return $this
+ */
+public function push(string $name, $pushValue)
+```
+
+## prepend
+```php
+**
+* Prepend a new value in an array.
+*
+* @param string $name
+* @param $prependValue
+*
+* @return $this
+*
+public function push(string $name, $prependValue)
+```
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.

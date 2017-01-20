@@ -97,6 +97,41 @@ class Valuestore implements ArrayAccess, Countable
     }
 
     /**
+     * Prepend a new value in an array.
+     *
+     * @param string $name
+     * @param $prependValue
+     *
+     * @return $this
+     */
+    public function prepend(string $name, $prependValue)
+    {
+        if (! is_array($prependValue)) {
+            $prependValue = [$prependValue];
+        }
+
+        if (! $this->has($name)) {
+            $this->put($name, $prependValue);
+
+            return $this;
+        }
+
+        $oldValue = $this->get($name);
+
+        if (! is_array($oldValue)) {
+            $oldValue = [$oldValue];
+        }
+
+        if (is_array($oldValue)) {
+            $newValue = array_merge($prependValue, $oldValue);
+        }
+
+        $this->put($name, $newValue);
+
+        return $this;
+    }
+
+    /**
      * Get a value from the store.
      *
      * @param string $name
