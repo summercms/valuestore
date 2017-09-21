@@ -127,7 +127,7 @@ public function has(string $name) : bool
  * Get all values from the store.
  *
  * @return array
-*/
+ */
 public function all() : array
 ```
 
@@ -230,14 +230,14 @@ public function push(string $name, $pushValue)
 
 ## prepend
 ```php
-**
-* Prepend a new value in an array.
-*
-* @param string $name
-* @param $prependValue
-*
-* @return $this
-*
+/**
+ * Prepend a new value in an array.
+ *
+ * @param string $name
+ * @param $prependValue
+ *
+ * @return $this
+ */
 public function push(string $name, $prependValue)
 ```
 
