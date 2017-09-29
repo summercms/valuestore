@@ -12,6 +12,7 @@ class Valuestore implements ArrayAccess, Countable
 
     /**
      * @param string $fileName
+     * @param array|null $values
      *
      * @return $this
      */
