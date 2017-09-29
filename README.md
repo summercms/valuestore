@@ -14,7 +14,7 @@ It can be used like this:
 ```php
 $valuestore = Valuestore::make($pathToFile);
 
-$valuestore->put('key', 'value'); // You can also store values using the `put()` method independently
+$valuestore->put('key', 'value');
 
 $valuestore->get('key'); // Returns 'value'
 
