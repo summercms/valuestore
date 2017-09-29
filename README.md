@@ -14,7 +14,7 @@ It can be used like this:
 ```php
 $valuestore = Valuestore::make($pathToFile);
 
-$valuestore->put('key', 'value');
+$valuestore->put('key', 'value'); // You can also store values using the `put()` method independently
 
 $valuestore->get('key'); // Returns 'value'
 
@@ -74,10 +74,12 @@ composer require spatie/valuestore
 
 ## Usage
 
-To create a Valuestore use the `make`-method.
+To create a Valuestore use the `make` method.
 
 ```php
 $valuestore = Valuestore::make($pathToFile);
+
+$valuestore = Valuestore::make($pathToFile, ['key' => 'value']); // You can also pass in an array as the optional second argument to store values in the Valuestore with it.
 ```
 
 All values will be saved as json in the given file.
