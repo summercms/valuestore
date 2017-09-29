@@ -15,13 +15,15 @@ class Valuestore implements ArrayAccess, Countable
      *
      * @return $this
      */
-    public static function make(string $fileName, array $put = null)
+    public static function make(string $fileName, array $values = null)
     {
-        if (isset($put)) {
-            return (new static())->setFileName($fileName)->put($put);
+        $valuestore = (new static())->setFileName($fileName);
+
+        if (! is_null($values)) {
+            $valuestore->put($values);
         }
 
-        return (new static())->setFileName($fileName);
+        return $valuestore;
     }
 
     protected function __construct()

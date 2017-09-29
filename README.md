@@ -12,7 +12,7 @@ This package makes it easy to store and retrieve some values. Stores values are 
 It can be used like this:
 
 ```php
-$valuestore = Valuestore::make($pathToFile, ['key' => 'value']); // Create Valuestore and store values in a single step with the optional second argument
+$valuestore = Valuestore::make($pathToFile);
 
 $valuestore->put('key', 'value'); // You can also store values using the `put()` method independently
 
@@ -74,12 +74,12 @@ composer require spatie/valuestore
 
 ## Usage
 
-To create a Valuestore use the `make` method. You can also pass in an array as the optional second argument to store values in the Valuestore with it.
+To create a Valuestore use the `make` method.
 
 ```php
 $valuestore = Valuestore::make($pathToFile);
 
-$valuestore = Valuestore::make($pathToFile, ['key' => 'value']); // Use of optional second argument
+$valuestore = Valuestore::make($pathToFile, ['key' => 'value']); // You can also pass in an array as the optional second argument to store values in the Valuestore with it.
 ```
 
 All values will be saved as json in the given file.

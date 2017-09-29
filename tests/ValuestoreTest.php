@@ -28,9 +28,9 @@ class ValuestoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_can_store_an_array_while_making_the_valuestore()
     {
-        $make = Valuestore::make($this->storageFile, ['key' => 'value']);
+        $valuestore = Valuestore::make($this->storageFile, ['key' => 'value']);
 
-        $this->assertSame('value', $make->get('key'));
+        $this->assertSame('value', $valuestore->get('key'));
     }
 
     /** @test */
