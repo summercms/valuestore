@@ -1,6 +1,6 @@
 # Changelog
 
-All Notable changes to `valuestore` will be documented in this file
+All notable changes to `valuestore` will be documented in this file
 
 ## 1.2.0 - 2017-09-29
 
