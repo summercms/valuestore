@@ -78,8 +78,12 @@ To create a Valuestore use the `make` method.
 
 ```php
 $valuestore = Valuestore::make($pathToFile);
+```
 
-$valuestore = Valuestore::make($pathToFile, ['key' => 'value']); // You can also pass in an array as the optional second argument to store values in the Valuestore with it.
+You can also pass some values as a second argument. These will be added to the valuestore using the `put` method.
+
+```php
+$valuestore = Valuestore::make($pathToFile, ['key' => 'value']);
 ```
 
 All values will be saved as json in the given file.
