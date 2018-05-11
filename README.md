@@ -12,6 +12,8 @@ This package makes it easy to store and retrieve some loose values. Stored value
 It can be used like this:
 
 ```php
+use Spatie\Valuestore\Valuestore;
+
 $valuestore = Valuestore::make($pathToFile);
 
 $valuestore->put('key', 'value');
