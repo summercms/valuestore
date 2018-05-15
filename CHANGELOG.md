@@ -2,6 +2,10 @@
 
 All notable changes to `valuestore` will be documented in this file
 
+## 1.2.2 - 2018-05-15
+
+- small performance improvement
+
 ## 1.2.1 - 2017-10-10
 
 - avoid writing to the json file when putting an empty array
