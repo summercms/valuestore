@@ -56,6 +56,8 @@ count($valuestore); // Returns 1
 
 Read the [usage](#usage) section of this readme to learn about the other methods.
 
+In [this post on Laravel News](https://laravel-news.com/global-application-settings), [Tim MacDonald](https://twitter.com/timacdonald87) shares how you can use this package to power a `settings` function.
+
 Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
 
 ## Installation
