@@ -2,6 +2,10 @@
 
 All notable changes to `valuestore` will be documented in this file
 
+## 1.2.3 - 2019-02-15
+
+- update deps
+
 ## 1.2.2 - 2018-05-15
 
 - small performance improvement
