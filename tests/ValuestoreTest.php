@@ -438,4 +438,20 @@ class ValuestoreTest extends TestCase
 
         $this->assertFileNotExists($this->storageFile);
     }
+
+    /** @test */
+    public function the_all_function_will_always_return_an_array()
+    {
+        $this->assertFileNotExists($this->storageFile);
+
+        touch($this->storageFile);
+
+        $this->assertStringEqualsFile($this->storageFile, '');
+
+        $this->assertIsArray($this->valuestore->all());
+
+        $this->valuestore->flush();
+
+        $this->assertFileNotExists($this->storageFile);
+    }
 }
