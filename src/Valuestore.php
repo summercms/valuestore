@@ -2,8 +2,8 @@
 
 namespace Spatie\Valuestore;
 
-use Countable;
 use ArrayAccess;
+use Countable;
 
 class Valuestore implements ArrayAccess, Countable
 {
