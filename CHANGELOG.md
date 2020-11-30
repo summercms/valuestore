@@ -2,6 +2,10 @@
 
 All notable changes to `valuestore` will be documented in this file
 
+## 1.2.5 - 2020-11-30
+
+- add support for PHP 8
+
 ## 1.2.4 - 2020-08-23
 
 - `all` will now always return an array (#23)
